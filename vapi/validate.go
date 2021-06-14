@@ -1,7 +1,6 @@
 package vapi
 
 import (
-	"encoding/json"
 	"fmt"
 	"strings"
 
@@ -26,12 +25,12 @@ func Validate(c *gin.Context) {
 	var aReviewRequest v1.AdmissionReview
 	c.BindJSON(&aReviewRequest)
 	if strings.ToLower(aReviewRequest.Request.Kind.Kind) == "admissionpolicy" {
+		// This is an admission policy. Load this policy in memory to use.
 		LoadPolicyFromAdmissionReview(&aReviewRequest)
 	} else {
+		// Validate the resource based on existing admission policies
 		ValidateResource(&aReviewRequest)
 	}
-
-	// var aReviewResponse v1.AdmissionResponse
 
 	status := &metav1.Status{
 		Status:  "accepted",
@@ -45,17 +44,4 @@ func Validate(c *gin.Context) {
 	}
 
 	c.JSON(200, aReviewResponse)
-}
-
-func ValidateResource(aReview *v1.AdmissionReview) {
-
-	var aResource map[string]interface{}
-
-	aJSON, _ := aReview.Request.Object.MarshalJSON()
-
-	err := json.Unmarshal(aJSON, &aResource)
-
-	if err != nil {
-		fmt.Println(err.Error())
-	}
 }

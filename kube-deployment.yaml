@@ -26,8 +26,8 @@ spec:
         image: 525158249545.dkr.ecr.us-west-2.amazonaws.com/jpe:vCODEBUILD_BUILD_NUMBER
         resources:
           limits:
-            memory: "128Mi"
-            cpu: "500m"
+            memory: "32Mi"
+            cpu: "50m"
         ports:
         - containerPort: 8443
 

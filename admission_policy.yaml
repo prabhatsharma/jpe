@@ -10,10 +10,11 @@ spec:
     validationFailureAction: enforce
     rule: |
       validate(resource){
-        if(resource.metadata.name == "simple") {
+        if(resource.metadata.name == "simple1") {
           return true;
         }
         return false;
       }
+
 
 

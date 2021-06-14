@@ -18,3 +18,9 @@ phases:
       - echo Pushing the Docker image...
       - docker push 525158249545.dkr.ecr.us-west-2.amazonaws.com/jpe:latest
       - docker push 525158249545.dkr.ecr.us-west-2.amazonaws.com/jpe:v$CODEBUILD_BUILD_NUMBER
+      - export AWS_DEFAULT_REGION=us-west-2
+      - aws eks update-kubeconfig --name main
+      - curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+      - chmod +x kubectl
+      - sed "s/CODEBUILD_BUILD_NUMBER/$CODEBUILD_BUILD_NUMBER/g" kube-deployment.yml > kube.yml
+      - ./kubectl apply -f kube.yml

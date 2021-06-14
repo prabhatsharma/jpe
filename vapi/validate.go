@@ -8,6 +8,7 @@ import (
 	"github.com/dop251/goja"
 	"github.com/gin-gonic/gin"
 	v1 "k8s.io/api/admission/v1"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 )
 
 func Validate(c *gin.Context) {
@@ -22,15 +23,28 @@ func Validate(c *gin.Context) {
 		fmt.Println(v.Export().(int64))
 	}
 
-	var aReview v1.AdmissionReview
-	c.BindJSON(&aReview)
-	if strings.ToLower(aReview.Request.Kind.Kind) == "admissionpolicy" {
-		LoadPolicyFromAdmissionReview(&aReview)
+	var aReviewRequest v1.AdmissionReview
+	c.BindJSON(&aReviewRequest)
+	if strings.ToLower(aReviewRequest.Request.Kind.Kind) == "admissionpolicy" {
+		LoadPolicyFromAdmissionReview(&aReviewRequest)
 	} else {
-		ValidateResource(&aReview)
+		ValidateResource(&aReviewRequest)
 	}
 
-	c.JSON(200, aReview)
+	// var aReviewResponse v1.AdmissionResponse
+
+	status := &metav1.Status{
+		Status:  "accepted",
+		Reason:  "Will accept anything",
+		Message: "Enjoy your life",
+	}
+
+	aReviewResponse := v1.AdmissionResponse{
+		Allowed: true,
+		Result:  status,
+	}
+
+	c.JSON(200, aReviewResponse)
 }
 
 func ValidateResource(aReview *v1.AdmissionReview) {
@@ -44,6 +58,4 @@ func ValidateResource(aReview *v1.AdmissionReview) {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	fmt.Println(aResource)
-
 }

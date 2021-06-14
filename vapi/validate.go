@@ -39,6 +39,7 @@ func Validate(c *gin.Context) {
 	}
 
 	aReviewResponse := v1.AdmissionResponse{
+		UID:     aReviewRequest.Request.UID,
 		Allowed: true,
 		Result:  status,
 	}

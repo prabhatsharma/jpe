@@ -15,7 +15,7 @@ func ValidateResource(aReviewRequest *v1.AdmissionReview) {
 		fmt.Println(err1)
 		return
 	}
-	fmt.Println("Validating resource:", e)
+	fmt.Println("Validating resource:", string(e))
 
 	aJSON, _ := aReviewRequest.Request.Object.MarshalJSON()
 

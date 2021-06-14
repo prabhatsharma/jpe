@@ -3,7 +3,8 @@
 ############################
 # FROM public.ecr.aws/vend/golang:1.8-alpine AS builder
 # FROM 525158249545.dkr.ecr.us-west-2.amazonaws.com/golang:1.16.5-alpine3.13 AS builder
-FROM golang:1.16.5-buster AS builder
+# FROM golang:1.16.5-buster AS builder
+FROM public.ecr.aws/bitnami/golang:1.16-debian-10 as builder
 # FROM golang:alpine AS builder
 # Install git.
 # Git is required for fetching the dependencies.

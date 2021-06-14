@@ -25,7 +25,7 @@ func LoadPolicyFromAdmissionReview(areview *v1.AdmissionReview) {
 	}
 
 	ap, _ := json.Marshal(aPolicy)
-	fmt.Println(ap)
+	fmt.Println(string(ap))
 
 	AdmissionPolicies = append(AdmissionPolicies, aPolicy)
 

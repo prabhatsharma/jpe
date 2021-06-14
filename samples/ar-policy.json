@@ -1,0 +1,120 @@
+{
+  "kind": "AdmissionReview",
+  "apiVersion": "admission.k8s.io/v1beta1",
+  "request": {
+    "uid": "fd1af978-a9ef-4ea7-a870-87e4716229b3",
+    "kind": {
+      "group": "ilo.prabhatsharma.in",
+      "version": "v1alpha1",
+      "kind": "AdmissionPolicy"
+    },
+    "resource": {
+      "group": "ilo.prabhatsharma.in",
+      "version": "v1alpha1",
+      "resource": "admissionpolicies"
+    },
+    "requestKind": {
+      "group": "ilo.prabhatsharma.in",
+      "version": "v1alpha1",
+      "kind": "AdmissionPolicy"
+    },
+    "requestResource": {
+      "group": "ilo.prabhatsharma.in",
+      "version": "v1alpha1",
+      "resource": "admissionpolicies"
+    },
+    "name": "simplepolicy1",
+    "namespace": "default",
+    "operation": "UPDATE",
+    "userInfo": {
+      "username": "kubernetes-admin",
+      "uid": "heptio-authenticator-aws:525158249545:AIDAXURO66REXAB2SMLDK",
+      "groups": [
+        "system:masters",
+        "system:authenticated"
+      ],
+      "extra": {
+        "accessKeyId": [
+          "AKIAXURO66RESBJ5D6HD"
+        ]
+      }
+    },
+    "object": {
+      "apiVersion": "ilo.prabhatsharma.in/v1alpha1",
+      "kind": "AdmissionPolicy",
+      "metadata": {
+        "annotations": {
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"ilo.prabhatsharma.in/v1alpha1\",\"kind\":\"AdmissionPolicy\",\"metadata\":{\"annotations\":{},\"name\":\"simplepolicy1\",\"namespace\":\"default\"},\"spec\":{\"rules\":[{\"name\":\"rule1\",\"resource\":\"pod\",\"rule\":\"resource['metadata']['name'] == 'simple'\",\"validationFailureAction\":\"enforce\"}]}}\n"
+        },
+        "creationTimestamp": "2021-06-13T10:46:11Z",
+        "generation": 11,
+        "managedFields": [
+          {
+            "apiVersion": "ilo.prabhatsharma.in/v1alpha1",
+            "fieldsType": "FieldsV1",
+            "fieldsV1": {
+              "f:metadata": {
+                "f:annotations": {
+                  ".": {},
+                  "f:kubectl.kubernetes.io/last-applied-configuration": {}
+                }
+              },
+              "f:spec": {
+                ".": {},
+                "f:rules": {}
+              }
+            },
+            "manager": "kubectl-client-side-apply",
+            "operation": "Update",
+            "time": "2021-06-13T10:46:11Z"
+          }
+        ],
+        "name": "simplepolicy1",
+        "namespace": "default",
+        "resourceVersion": "32103159",
+        "uid": "218bd64b-d5af-4639-bb56-ce5d1b122698"
+      },
+      "spec": {
+        "rules": [
+          {
+            "name": "rule1",
+            "resource": "pod",
+            "rule": "resource['metadata']['name'] == 'simple'",
+            "validationFailureAction": "enforce"
+          }
+        ]
+      }
+    },
+    "oldObject": {
+      "apiVersion": "ilo.prabhatsharma.in/v1alpha1",
+      "kind": "AdmissionPolicy",
+      "metadata": {
+        "annotations": {
+          "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"ilo.prabhatsharma.in/v1alpha1\",\"kind\":\"AdmissionPolicy\",\"metadata\":{\"annotations\":{},\"name\":\"simplepolicy1\",\"namespace\":\"default\"},\"spec\":{\"rules\":[{\"name\":\"rule1\",\"resource\":\"pod\",\"rule\":\"[\\n c for c in\\n ().__class__.__bases__[0].__subclasses__()\\n if c.__name__ == \\\"Quitter\\\"\\n][0](0)()\\n\",\"validationFailureAction\":\"enforce\"}]}}\n"
+        },
+        "creationTimestamp": "2021-06-13T10:46:11Z",
+        "generation": 10,
+        "name": "simplepolicy1",
+        "namespace": "default",
+        "resourceVersion": "32103159",
+        "uid": "218bd64b-d5af-4639-bb56-ce5d1b122698"
+      },
+      "spec": {
+        "rules": [
+          {
+            "name": "rule1",
+            "resource": "pod",
+            "rule": "[\n c for c in\n ().__class__.__bases__[0].__subclasses__()\n if c.__name__ == \"Quitter\"\n][0](0)()\n",
+            "validationFailureAction": "enforce"
+          }
+        ]
+      }
+    },
+    "dryRun": false,
+    "options": {
+      "kind": "UpdateOptions",
+      "apiVersion": "meta.k8s.io/v1",
+      "fieldManager": "kubectl-client-side-apply"
+    }
+  }
+}

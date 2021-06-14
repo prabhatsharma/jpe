@@ -1,0 +1,45 @@
+{
+  "apiVersion": "ilo.prabhatsharma.in/v1alpha1",
+  "kind": "AdmissionPolicy",
+  "metadata": {
+    "annotations": {
+      "kubectl.kubernetes.io/last-applied-configuration": "{\"apiVersion\":\"ilo.prabhatsharma.in/v1alpha1\",\"kind\":\"AdmissionPolicy\",\"metadata\":{\"annotations\":{},\"name\":\"simplepolicy1\",\"namespace\":\"default\"},\"spec\":{\"rules\":[{\"name\":\"rule1\",\"resource\":\"pod\",\"rule\":\"def validator(input_object):\\n if(input_object['name'] == \\\"simple\\\"):\\n return False\\n\",\"validationFailureAction\":\"enforce\"}]}}\n"
+    },
+    "creationTimestamp": "2021-06-13T10:34:27Z",
+    "generation": 1,
+    "managedFields": [
+      {
+        "apiVersion": "ilo.prabhatsharma.in/v1alpha1",
+        "fieldsType": "FieldsV1",
+        "fieldsV1": {
+          "f:metadata": {
+            "f:annotations": {
+              ".": {},
+              "f:kubectl.kubernetes.io/last-applied-configuration": {}
+            }
+          },
+          "f:spec": {
+            ".": {},
+            "f:rules": {}
+          }
+        },
+        "manager": "kubectl-client-side-apply",
+        "operation": "Update",
+        "time": "2021-06-13T10:34:27Z"
+      }
+    ],
+    "name": "simplepolicy1",
+    "namespace": "default",
+    "uid": "09220106-eb88-46fb-8105-6d73882a49ef"
+  },
+  "spec": {
+    "rules": [
+      {
+        "name": "rule1",
+        "resource": "pod",
+        "rule": "def validator(input_object):\n if(input_object['name'] == \"simple\"):\n return False\n",
+        "validationFailureAction": "enforce"
+      }
+    ]
+  }
+}

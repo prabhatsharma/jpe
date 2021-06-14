@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: jpe
+  labels:
+    app: jpe
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jpe
+  namespace: jpe
+spec:
+  selector:
+    matchLabels:
+      app: jpe
+  template:
+    metadata:
+      labels:
+        app: jpe
+    spec:
+      containers:
+      - name: jpe
+        image: 525158249545.dkr.ecr.us-west-2.amazonaws.com/jpe:v1
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8443
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: jpe
+  namespace: jpe
+spec:
+  selector:
+    app: jpe
+  ports:
+  - port: 8443
+    targetPort: 8443
+
+

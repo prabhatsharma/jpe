@@ -1,0 +1,19 @@
+apiVersion: ilo.prabhatsharma.in/v1alpha1
+kind: AdmissionPolicy
+metadata:
+  name: simplepolicy
+  namespace: default
+spec:
+  rules:
+  - name: rule1
+    resource: pod
+    validationFailureAction: enforce
+    rule: |
+      validate(resource){
+        if(resource.metadata.name == "simple") {
+          return true;
+        }
+        return false;
+      }
+
+

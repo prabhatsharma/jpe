@@ -22,5 +22,5 @@ phases:
       - aws eks update-kubeconfig --name main
       - curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
       - chmod +x kubectl
-      - sed "s/CODEBUILD_BUILD_NUMBER/$CODEBUILD_BUILD_NUMBER/g" kube-deployment.yml > kube.yml
-      - ./kubectl apply -f kube.yml
+      - sed "s/CODEBUILD_BUILD_NUMBER/$CODEBUILD_BUILD_NUMBER/g" kube-deployment.yaml > kube.yaml
+      - ./kubectl apply -f kube.yaml

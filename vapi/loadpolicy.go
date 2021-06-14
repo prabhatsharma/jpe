@@ -16,9 +16,6 @@ func LoadPolicyFromCustomResources() {
 func LoadPolicyFromAdmissionReview(areview *v1.AdmissionReview) {
 	var aPolicy AdmissionPolicy
 
-	// reviewObject, _ := json.Marshal(areview)
-	// fmt.Println("Review Object is:", string(reviewObject))
-
 	aJSON, _ := areview.Request.Object.MarshalJSON()
 
 	err := json.Unmarshal(aJSON, &aPolicy)
@@ -26,6 +23,9 @@ func LoadPolicyFromAdmissionReview(areview *v1.AdmissionReview) {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
+
+	reviewObject, _ := json.Marshal(areview)
+	fmt.Println("Policy Review Object is:", string(reviewObject))
 
 	ap, _ := json.Marshal(aPolicy)
 	fmt.Println("Policy is: ", string(ap))

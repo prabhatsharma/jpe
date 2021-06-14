@@ -16,6 +16,9 @@ func LoadPolicyFromCustomResources() {
 func LoadPolicyFromAdmissionReview(areview *v1.AdmissionReview) {
 	var aPolicy AdmissionPolicy
 
+	reviewObject, _ := json.Marshal(areview)
+	fmt.Println("Review Object is:", string(reviewObject))
+
 	aJSON, _ := areview.Request.Object.MarshalJSON()
 
 	err := json.Unmarshal(aJSON, &aPolicy)
@@ -25,7 +28,7 @@ func LoadPolicyFromAdmissionReview(areview *v1.AdmissionReview) {
 	}
 
 	ap, _ := json.Marshal(aPolicy)
-	fmt.Println(string(ap))
+	fmt.Println("Object is: ", string(ap))
 
 	AdmissionPolicies = append(AdmissionPolicies, aPolicy)
 

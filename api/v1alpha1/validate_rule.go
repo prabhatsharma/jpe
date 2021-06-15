@@ -1,4 +1,4 @@
-package vapi
+package v1alpha1
 
 import (
 	"encoding/json"
@@ -7,7 +7,6 @@ import (
 	"github.com/dop251/goja"
 	v1 "k8s.io/api/admission/v1"
 )
-
 
 func ValidateRule(rule *Rule, aReviewRequest *v1.AdmissionReview) RuleResponse {
 	var rr RuleResponse

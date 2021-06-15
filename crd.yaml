@@ -15,6 +15,7 @@ spec:
       storage: true
       schema:
         openAPIV3Schema:
+          required: ["spec"]
           type: object
           properties:
             spec:

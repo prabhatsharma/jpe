@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/prabhatsharma/jpe/vapi"
+	"github.com/prabhatsharma/jpe/api/v1alpha1"
 )
 
 func main() {
@@ -13,7 +13,7 @@ func main() {
 		})
 	})
 
-	r.POST("/validate", vapi.Validate)
+	r.POST("/validate", v1alpha1.Validate)
 
 	r.RunTLS(":8443", "./cert/server.crt", "./cert/server.key")
 }

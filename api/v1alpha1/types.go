@@ -1,7 +1,10 @@
-package vapi
+package v1alpha1
 
 import metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
+//go:generate controller-gen object paths=$GOFILE
+
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 type AdmissionPolicy struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
@@ -9,6 +12,7 @@ type AdmissionPolicy struct {
 }
 
 type AdmissionPolicySpec struct {
+	// Rules is a collection of one or more independent rules against which resources will be validated against.
 	Rules []Rule `json:"rules"`
 }
 
@@ -25,4 +29,12 @@ type RuleResponse struct {
 	Allowed bool   `json:"allowed"`
 	Status  string `json:"status"`
 	Message string `json:"message"`
+}
+
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+type AdmissionPolicyList struct {
+	metav1.TypeMeta `json:",inline"`
+	metav1.ListMeta `json:"metadata,omitempty"`
+
+	Items []AdmissionPolicy `json:"items"`
 }

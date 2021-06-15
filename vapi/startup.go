@@ -1,6 +1,5 @@
 package vapi
 
-
 import (
 	"fmt"
 	"os"

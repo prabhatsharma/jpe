@@ -31,10 +31,14 @@ spec:
                         type: string
                       validationFailureAction:
                         type: string
+                      description:
+                        type: string
+                      message:
+                        type: string
                       rule:
                         type: string
   # either Namespaced or Cluster
-  scope: Namespaced
+  scope: Cluster
   names:
     # plural name to be used in the URL: /apis/<group>/<version>/<plural>
     plural: admissionpolicies
@@ -43,6 +47,5 @@ spec:
     # kind is normally the CamelCased singular type. Your resource manifests use this.
     kind: AdmissionPolicy
     # shortNames allow shorter string to match your resource on the CLI
-    shortNames:
-    - ap
+    shortNames: [ "ap" ]
 

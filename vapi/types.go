@@ -17,4 +17,12 @@ type Rule struct {
 	Resource                string `json:"resource"`
 	ValidationFailureAction string `json:"validationFailureAction"`
 	Rule                    string `json:"rule"`
+	Description             string `json:"description"`
+	Message                 string `json:"message"`
+}
+
+type RuleResponse struct {
+	Allowed bool   `json:"allowed"`
+	Status  string `json:"status"`
+	Message string `json:"message"`
 }

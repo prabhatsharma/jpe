@@ -1,61 +1,41 @@
 package v1alpha1
 
 import (
-	"flag"
+	"context"
 	"fmt"
 	"os"
-	"path/filepath"
 
-	"k8s.io/client-go/kubernetes"
-	"k8s.io/client-go/rest"
-	"k8s.io/client-go/tools/clientcmd"
-	"k8s.io/client-go/util/homedir"
+	"sigs.k8s.io/controller-runtime/pkg/client"
+	"sigs.k8s.io/controller-runtime/pkg/client/config"
 )
 
 var AdmissionPolicies []AdmissionPolicy
 
 func Startup() {
 	LoadPolicyFromCustomResources()
-
 }
 
 // LoadPolicyFromCustomResources loads policie from Custom resources that were created before the controller started.
 func LoadPolicyFromCustomResources() {
-	KUBERNETES_SERVICE_HOST := os.Getenv("KUBERNETES_SERVICE_HOST")
+	var apList AdmissionPolicyList
 
-	fmt.Println(KUBERNETES_SERVICE_HOST)
+	getAdmissionPolicies(&apList)
 
-	var kubeconfig *string
-	var config *rest.Config
-	var err error
+	AdmissionPolicies = append(AdmissionPolicies, apList.Items...)
 
-	if KUBERNETES_SERVICE_HOST == "" { // outsode of a cluster
-		if home := homedir.HomeDir(); home != "" {
-			kubeconfig = flag.String("kubeconfig", filepath.Join(home, ".kube", "config"), "(optional) absolute path to the kubeconfig file")
-		} else {
-			kubeconfig = flag.String("kubeconfig", "", "absolute path to the kubeconfig file")
-		}
-		flag.Parse()
+}
 
-		// use the current context in kubeconfig
-		config, err = clientcmd.BuildConfigFromFlags("", *kubeconfig)
-		if err != nil {
-			panic(err.Error())
-		}
-	} else { // inside a cluster
-
-		config, err = rest.InClusterConfig()
-		if err != nil {
-			panic(err.Error())
-		}
-	}
-
-	// create the clientset
-	clientset, err := kubernetes.NewForConfig(config)
+func getAdmissionPolicies(apList *AdmissionPolicyList) error {
+	cl, err := client.New(config.GetConfigOrDie(), client.Options{})
 	if err != nil {
-		panic(err.Error())
+		fmt.Println("failed to create client")
+		os.Exit(1)
 	}
 
-	fmt.Println(clientset)
-
+	err = cl.List(context.Background(), apList)
+	if err != nil {
+		fmt.Printf("failed to list pods in namespace default: %v\n", err)
+		return err
+	}
+	return nil
 }

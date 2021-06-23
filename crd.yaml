@@ -48,5 +48,5 @@ spec:
     # kind is normally the CamelCased singular type. Your resource manifests use this.
     kind: AdmissionPolicy
     # shortNames allow shorter string to match your resource on the CLI
-    shortNames: [ "ap" ]
+    shortNames: [ "ap", "aps" ]
 

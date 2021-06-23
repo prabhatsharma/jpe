@@ -38,3 +38,7 @@ type AdmissionPolicyList struct {
 
 	Items []AdmissionPolicy `json:"items"`
 }
+
+func init() {
+	SchemeBuilder.Register(&AdmissionPolicy{}, &AdmissionPolicyList{})
+}

@@ -25,6 +25,9 @@ spec:
       containers:
       - name: jpe
         image: 525158249545.dkr.ecr.us-west-2.amazonaws.com/jpe:vCODEBUILD_BUILD_NUMBER
+        env:
+          - name: GIN_MODE
+            value: release
         resources:
           limits:
             memory: "32Mi"

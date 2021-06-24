@@ -16,12 +16,12 @@ func ValidateRule(rule *Rule, aReviewRequest *v1.AdmissionReview) RuleResponse {
 	result := true
 
 	// Check if we are evaluating for the right resource kind. e.g. If rule is for pod and resource is not pod then skip.
-	fmt.Println("Evaluating Rule: ", rule.Name)
-	requestedResourceType := strings.ToLower(rule.ResourceKind)
-	ruleResourceType := strings.ToLower(aReviewRequest.Request.Kind.Kind)
+	// fmt.Println("Evaluating Rule: ", rule.Name)
+	requestedResourceKind := strings.ToLower(aReviewRequest.Request.Kind.Kind)
+	ruleResourceKind := strings.ToLower(rule.ResourceKind)
 
-	fmt.Println("requestedResourceType = ", requestedResourceType, "---- ruleResourceType = ", ruleResourceType)
-	if requestedResourceType != ruleResourceType {
+	// fmt.Println("requestedResourceKind = ", requestedResourceKind, "---- ruleResourceKind = ", ruleResourceKind)
+	if requestedResourceKind != ruleResourceKind {
 		rr.Status = "Success"
 		return rr
 	}

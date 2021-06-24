@@ -2,6 +2,7 @@ package v1alpha1
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"os"
 
@@ -22,6 +23,10 @@ func LoadPolicyFromCustomResources() {
 	getAdmissionPolicies(&apList)
 
 	AdmissionPolicies = append(AdmissionPolicies, apList.Items...)
+
+	policies, _ := json.Marshal(AdmissionPolicies)
+
+	fmt.Println("Existing admissionpolicies: ", string(policies))
 
 }
 

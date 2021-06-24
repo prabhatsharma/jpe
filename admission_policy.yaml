@@ -2,7 +2,7 @@ apiVersion: jpe.prabhatsharma.in/v1alpha1
 kind: AdmissionPolicy
 metadata:
   name: simplepolicy
-  namespace: default
+  # namespace: default
 spec:
   rules:
   - name: rule1

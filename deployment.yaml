@@ -24,11 +24,11 @@ spec:
       serviceAccount: jpe
       containers:
       - name: jpe
-        image: 525158249545.dkr.ecr.us-west-2.amazonaws.com/jpe:v2
+        image: 525158249545.dkr.ecr.us-west-2.amazonaws.com/jpe:v41
         resources:
           limits:
-            memory: "128Mi"
-            cpu: "500m"
+            memory: "32Mi"
+            cpu: "50m"
         ports:
         - containerPort: 8443
 

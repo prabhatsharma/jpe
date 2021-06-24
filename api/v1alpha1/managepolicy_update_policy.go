@@ -36,7 +36,3 @@ func UpdatePolicy(aReview *v1.AdmissionReview) RuleResponse {
 	return rr
 
 }
-
-func PrintPolicies() {
-	logger.LogStuff("Current PolicyList: ", AdmissionPolicies)
-}

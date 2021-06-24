@@ -3,12 +3,34 @@ package v1alpha1
 import (
 	"encoding/json"
 	"fmt"
+	"reflect"
 	"time"
 )
 
 var logger MyLogger
 
-// var jsonLogger JSONLogger
+var json2Logger JSON2Logger
+
+func (logm *JSON2Logger) LogJSON(description string, val interface{}) {
+
+	finalMessage := make(map[string]interface{})
+
+	v := reflect.ValueOf(val)
+
+	if v.Kind() == reflect.Map {
+		for _, key := range v.MapKeys() {
+			strct := v.MapIndex(key)
+			// fmt.Println(key.Interface(), strct.Interface())
+			finalMessage[key.Interface().(string)] = strct.Interface()
+		}
+	}
+	finalMessage["timestamp"] = time.Now()
+	finalMessage["description"] = description
+
+	logMessage, _ := json.Marshal(finalMessage)
+
+	fmt.Println(string(logMessage))
+}
 
 func (logm *JSONLogger) LogJSON(description string, val map[string]interface{}) {
 	val["timestamp"] = time.Now()
@@ -40,4 +62,14 @@ type JSONLogger struct {
 	Timestamp   time.Time     `json:"timestamp"`
 	Description string        `json:"description"`
 	Message     []interface{} `json:"message"`
+}
+
+type JSON2Logger struct {
+	Timestamp   time.Time              `json:"timestamp"`
+	Description string                 `json:"description"`
+	Message     map[string]interface{} `json:"message"`
+}
+
+func PrintPolicies() {
+	logger.LogStuff("Current PolicyList: ", AdmissionPolicies)
 }

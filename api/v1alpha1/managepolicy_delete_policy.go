@@ -9,22 +9,22 @@ import (
 
 // DeletePolicy loads policy immediately into memory when a new CR is created
 func DeletePolicy(aReview *v1.AdmissionReview) RuleResponse {
+
+	json2Logger.LogJSON("delete request is: ", aReview)
 	var rr RuleResponse
-	var aPolicy AdmissionPolicy
+	var requestedDeletePolicy AdmissionPolicy
 
 	aJSON, _ := aReview.Request.Object.MarshalJSON()
 
-	err := json.Unmarshal(aJSON, &aPolicy)
+	err := json.Unmarshal(aJSON, &requestedDeletePolicy)
 
 	if err != nil {
 		fmt.Println(err.Error())
 	}
 
-	// var policyIndex int
-
-	for index, policy := range AdmissionPolicies {
-		if aPolicy.Name == policy.Name {
-			// policyIndex = index
+	for index, existingPolicy := range AdmissionPolicies {
+		logger.LogStuff("requestedDeletePolicy and existingPolicy are: ", requestedDeletePolicy, existingPolicy)
+		if requestedDeletePolicy.Name == existingPolicy.Name {
 			// Remove the policy from the central repo (memory)
 			AdmissionPolicies = append(AdmissionPolicies[:index], AdmissionPolicies[index+1:]...)
 			continue

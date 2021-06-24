@@ -11,6 +11,7 @@ var (
 
 func main() {
 	r := gin.Default()
+	gin.SetMode(gin.ReleaseMode)
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "pong",

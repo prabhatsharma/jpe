@@ -40,8 +40,6 @@ func ValidateRule(rule *Rule, aReviewRequest *v1.AdmissionReview) RuleResponse {
 		return rr
 	}
 
-	fmt.Println("Rule result is: ", res)
-
 	result = res.ToBoolean()
 
 	if result {
@@ -52,6 +50,10 @@ func ValidateRule(rule *Rule, aReviewRequest *v1.AdmissionReview) RuleResponse {
 		rr.Allowed = false
 		rr.Status = "Success"
 		rr.Message = rule.Name + " : Failed : " + rule.Message
+
+		rrValue, _ := json.Marshal(rr)
+
+		fmt.Println("Rule result is: ", string(rrValue))
 	}
 
 	return rr

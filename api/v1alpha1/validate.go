@@ -47,16 +47,16 @@ func Validate(c *gin.Context) {
 			Result:  status,
 		}
 
-		if !rr.Allowed {
-			aRR, _ := json.Marshal(aReviewRequest)
-			arV, _ := json.Marshal(aReviewResponse)
-			fmt.Println("ReviewRequest is: ", string(aRR))
-			fmt.Println("ReviewResponse is: ", string(arV))
-		}
-
 		finalResponse := v1.AdmissionReview{
 			TypeMeta: aReviewRequest.TypeMeta,
 			Response: &aReviewResponse,
+		}
+
+		if !rr.Allowed {
+			aRR, _ := json.Marshal(aReviewRequest)
+			arV, _ := json.Marshal(finalResponse)
+			fmt.Println("ReviewRequest is: ", string(aRR))
+			fmt.Println("ReviewResponse is: ", string(arV))
 		}
 
 		c.JSON(200, finalResponse)

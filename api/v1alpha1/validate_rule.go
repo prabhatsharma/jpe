@@ -17,8 +17,8 @@ func ValidateRule(rule *Rule, aReviewRequest *v1.AdmissionReview) RuleResponse {
 	reviewObject, _ := json.Marshal(aReviewRequest.Request.Object)
 	jsObject := string(reviewObject)
 
-	fmt.Println("Rule is: ", rule)
-	fmt.Println("JSObject is: ", jsObject)
+	// fmt.Println("Rule is: ", rule)
+	// fmt.Println("JSObject is: ", jsObject)
 	vm := goja.New()
 	_, err := vm.RunString(rule.Rule)
 	if err != nil {

@@ -1,8 +1,6 @@
 package v1alpha1
 
 import (
-	"fmt"
-
 	v1 "k8s.io/api/admission/v1"
 )
 

@@ -54,6 +54,11 @@ func Validate(c *gin.Context) {
 			fmt.Println("ReviewResponse is: ", string(arV))
 		}
 
-		c.JSON(200, aReviewResponse)
+		finalResponse := v1.AdmissionReview{
+			TypeMeta: aReviewRequest.TypeMeta,
+			Response: &aReviewResponse,
+		}
+
+		c.JSON(200, finalResponse)
 	}
 }

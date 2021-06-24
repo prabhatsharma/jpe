@@ -8,6 +8,7 @@ import (
 
 func ValidateResource(aReviewRequest *v1.AdmissionReview) RuleResponse {
 	var rr RuleResponse
+	rr.Allowed = true // By default we pass everything
 
 	for _, admissionPolicy := range AdmissionPolicies {
 		for _, rule := range admissionPolicy.Spec.Rules {

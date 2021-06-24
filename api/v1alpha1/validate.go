@@ -48,7 +48,9 @@ func Validate(c *gin.Context) {
 		}
 
 		if !rr.Allowed {
+			aRR, _ := json.Marshal(aReviewRequest)
 			arV, _ := json.Marshal(aReviewResponse)
+			fmt.Println("ReviewRequest is: ", string(aRR))
 			fmt.Println("ReviewResponse is: ", string(arV))
 		}
 

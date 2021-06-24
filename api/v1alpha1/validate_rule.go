@@ -3,6 +3,7 @@ package v1alpha1
 import (
 	"encoding/json"
 	"strings"
+	"time"
 
 	"github.com/dop251/goja"
 	v1 "k8s.io/api/admission/v1"
@@ -15,11 +16,9 @@ func ValidateRule(rule *Rule, aReviewRequest *v1.AdmissionReview) RuleResponse {
 	result := true
 
 	// Check if we are evaluating for the right resource kind. e.g. If rule is for pod and resource is not pod then skip.
-	// fmt.Println("Evaluating Rule: ", rule.Name)
 	requestedResourceKind := strings.ToLower(aReviewRequest.Request.Kind.Kind)
 	ruleResourceKind := strings.ToLower(rule.ResourceKind)
 
-	// fmt.Println("requestedResourceKind = ", requestedResourceKind, "---- ruleResourceKind = ", ruleResourceKind)
 	if requestedResourceKind != ruleResourceKind {
 		rr.Status = "Success"
 		return rr
@@ -28,8 +27,6 @@ func ValidateRule(rule *Rule, aReviewRequest *v1.AdmissionReview) RuleResponse {
 	reviewObject, _ := json.Marshal(aReviewRequest.Request.Object)
 	jsObject := string(reviewObject)
 
-	// fmt.Println("Rule is: ", rule)
-	// fmt.Println("JSObject is: ", jsObject)
 	vm := goja.New()
 	_, err := vm.RunString(rule.Rule)
 	if err != nil {
@@ -38,11 +35,14 @@ func ValidateRule(rule *Rule, aReviewRequest *v1.AdmissionReview) RuleResponse {
 
 	validate, ok := goja.AssertFunction(vm.Get("validate"))
 	if !ok {
-		// panic("Not a function")
-
 		rr.Message = rule.Name + " : Invalid Rule: Not a function. Validation allowed. Should be in the form function validate(resource) { return true/false;}"
 		return rr
 	}
+
+	// Interrupt javascript in 200 milliseconds. This will avoid any long running javascript loops improving security.
+	time.AfterFunc(200*time.Millisecond, func() {
+		vm.Interrupt("halt")
+	})
 
 	res, err := validate(goja.Undefined(), vm.ToValue(jsObject))
 	if err != nil {

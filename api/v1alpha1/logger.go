@@ -9,7 +9,7 @@ import (
 
 var logger MyLogger
 
-var json2Logger JSON2Logger
+// var json2Logger JSON2Logger
 
 func (logm *JSON2Logger) LogJSON(description string, val interface{}) {
 

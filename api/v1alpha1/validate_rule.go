@@ -41,7 +41,7 @@ func ValidateRule(rule *Rule, aReviewRequest *v1.AdmissionReview) RuleResponse {
 	if !ok {
 		// panic("Not a function")
 
-		rr.Message = rule.Name + " : Invalid Rule: Not a function. Vsalidation allowed. Should be in the form function validate(resource) { return true/false;}"
+		rr.Message = rule.Name + " : Invalid Rule: Not a function. Validation allowed. Should be in the form function validate(resource) { return true/false;}"
 		return rr
 	}
 

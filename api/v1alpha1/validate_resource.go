@@ -12,7 +12,7 @@ func ValidateResource(aReviewRequest *v1.AdmissionReview) RuleResponse {
 			// fmt.Println(rule.Rule)
 			rr = ValidateRule(&rule, aReviewRequest)
 			if !rr.Allowed {
-				rr.Message = admissionPolicy.Name + " : " + rr.Message
+				rr.Message = "Policy/Rule: " + admissionPolicy.Name + "/" + rr.Message
 				return rr // return immediately if any rule fails
 			}
 		}

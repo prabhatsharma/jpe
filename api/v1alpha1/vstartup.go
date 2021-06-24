@@ -14,13 +14,14 @@ import (
 )
 
 var (
-	// scheme   = runtime.NewScheme()
+	scheme1  = runtime.NewScheme()
 	setupLog = ctrl.Log.WithName("setup")
 )
 
 var AdmissionPolicies []AdmissionPolicy
 
 func Startup() {
+	AddToScheme(scheme1)
 	LoadPolicyFromCustomResources()
 }
 
@@ -47,13 +48,11 @@ func LoadPolicyFromCustomResources() {
 }
 
 func getAdmissionPolicies(apList *AdmissionPolicyList) error {
-	cl, err := client.New(config.GetConfigOrDie(), client.Options{})
+	cl, err := client.New(config.GetConfigOrDie(), client.Options{Scheme: scheme1})
 	if err != nil {
 		fmt.Println("failed to create client")
 		os.Exit(1)
 	}
-
-	// var api *AdmisssionPolicy
 
 	err = cl.List(context.Background(), apList)
 
@@ -66,8 +65,7 @@ func getAdmissionPolicies(apList *AdmissionPolicyList) error {
 }
 
 func getAdmissionPolicy(ap *AdmissionPolicy) error {
-	scheme := runtime.NewScheme()
-	cl, err := client.New(config.GetConfigOrDie(), client.Options{Scheme: scheme})
+	cl, err := client.New(config.GetConfigOrDie(), client.Options{Scheme: scheme1})
 	if err != nil {
 		fmt.Println("failed to create client")
 		os.Exit(1)
@@ -79,7 +77,7 @@ func getAdmissionPolicy(ap *AdmissionPolicy) error {
 		Name: "simplepolicy",
 	}
 
-	err = cl.Get(context.Background(), okey, ap)
+	err = cl.Get(context.TODO(), okey, ap)
 
 	if err != nil {
 		fmt.Printf("\nfailed to get admissionpolicy : %v\n", err)

@@ -20,7 +20,7 @@ type AdmissionPolicySpec struct {
 
 type Rule struct {
 	Name                    string `json:"name"`
-	Resource                string `json:"resource"`
+	ResourceKind            string `json:"resourceKind"`
 	ValidationFailureAction string `json:"validationFailureAction"`
 	Rule                    string `json:"rule"`
 	Description             string `json:"description"`

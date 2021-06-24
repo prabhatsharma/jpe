@@ -28,7 +28,7 @@ spec:
                     properties:
                       name:
                         type: string
-                      resource:
+                      resourceKind:
                         type: string
                       validationFailureAction:
                         type: string

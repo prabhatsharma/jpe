@@ -6,7 +6,7 @@ metadata:
 spec:
   rules:
   - name: rule1
-    resource: pod
+    resourceKind: pod
     validationFailureAction: enforce
     description: Any pods that have the name simple are really weird and we should prevent them from running. 
     message: Pod name should not be simple.

@@ -1,8 +1,6 @@
 package v1alpha1
 
 import (
-	"encoding/json"
-	"fmt"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -81,10 +79,8 @@ func Validate(c *gin.Context) {
 		}
 
 		if !rr.Allowed {
-			aRR, _ := json.Marshal(aReviewRequest)
-			arV, _ := json.Marshal(finalResponse)
-			fmt.Println("ReviewRequest is: ", string(aRR))
-			fmt.Println("ReviewResponse is: ", string(arV))
+			logger.LogStuff("ReviewRequest is: ", aReviewRequest)
+			logger.LogStuff("ReviewResponse is: ", finalResponse)
 		}
 
 		c.JSON(200, finalResponse)

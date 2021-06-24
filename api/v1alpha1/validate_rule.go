@@ -2,7 +2,6 @@ package v1alpha1
 
 import (
 	"encoding/json"
-	"fmt"
 	"strings"
 
 	"github.com/dop251/goja"
@@ -63,9 +62,7 @@ func ValidateRule(rule *Rule, aReviewRequest *v1.AdmissionReview) RuleResponse {
 		rr.Status = "Success"
 		rr.Message = rule.Name + " : Failed : " + rule.Message
 
-		rrValue, _ := json.Marshal(rr)
-
-		fmt.Println("Rule result is: ", string(rrValue))
+		logger.LogStuff("Rule result is: ", rr)
 	}
 
 	return rr

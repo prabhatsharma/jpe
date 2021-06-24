@@ -2,7 +2,6 @@ package v1alpha1
 
 import (
 	"context"
-	"encoding/json"
 	"fmt"
 	"os"
 
@@ -31,9 +30,7 @@ func LoadPolicyFromCustomResources() {
 
 	AdmissionPolicies = append(AdmissionPolicies, apList.Items...)
 
-	policies, _ := json.Marshal(AdmissionPolicies)
-
-	fmt.Println("Existing admissionpolicies: ", string(policies))
+	logger.LogStuff("Existing admissionpolicies: ", AdmissionPolicies)
 
 }
 
@@ -47,7 +44,7 @@ func getAdmissionPolicies(apList *AdmissionPolicyList) error {
 	err = cl.List(context.Background(), apList)
 
 	if err != nil {
-		fmt.Printf("\nfailed to list admissionpolicies in namespace default: %v\n", err)
+		logger.LogStuff("failed to list admissionpolicies in namespace default:", err)
 		return err
 	}
 

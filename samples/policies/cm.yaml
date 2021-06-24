@@ -1,0 +1,23 @@
+apiVersion: jpe.prabhatsharma.in/v1alpha1
+kind: AdmissionPolicy
+metadata:
+  name: simpleconfigmappolicy
+  # namespace: default
+spec:
+  rules:
+  - name: rule1
+    resourceKind: configmap
+    validationFailureAction: enforce
+    description: Any configmaps that have the name simple are really weird and we should prevent them from running. 
+    message: configmap name should not be simple.
+    rule: |
+      function validate(resource){
+        resource = JSON.parse(resource);
+        if(resource.metadata.name != "simple") {
+          return true;
+        };
+        return false;
+      }
+
+
+

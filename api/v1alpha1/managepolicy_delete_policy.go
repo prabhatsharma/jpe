@@ -1,9 +1,6 @@
 package v1alpha1
 
 import (
-	"encoding/json"
-	"fmt"
-
 	v1 "k8s.io/api/admission/v1"
 )
 
@@ -13,19 +10,20 @@ func DeletePolicy(aReview *v1.AdmissionReview) RuleResponse {
 
 	// json2Logger.LogJSON("delete request is: ", aReview)
 	var rr RuleResponse
-	var requestedDeletePolicy AdmissionPolicy
+	// var requestedDeletePolicy AdmissionPolicy
 
-	aJSON, _ := aReview.Request.Object.MarshalJSON()
+	// aJSON, _ := aReview.Request.Name
 
-	err := json.Unmarshal(aJSON, &requestedDeletePolicy)
+	// err := json.Unmarshal(aJSON, &requestedDeletePolicy)
+	requestedDeletePolicy := aReview.Request.Name
 
-	if err != nil {
-		fmt.Println(err.Error())
-	}
+	// if err != nil {
+	// 	fmt.Println(err.Error())
+	// }
 
 	for index, existingPolicy := range AdmissionPolicies {
 		logger.LogStuff("requestedDeletePolicy and existingPolicy are: ", requestedDeletePolicy, existingPolicy)
-		if requestedDeletePolicy.Name == existingPolicy.Name {
+		if requestedDeletePolicy == existingPolicy.Name {
 			// Remove the policy from the central repo (memory)
 			AdmissionPolicies = append(AdmissionPolicies[:index], AdmissionPolicies[index+1:]...)
 			continue

@@ -15,6 +15,7 @@ func ValidateRule(rule *Rule, aReviewRequest *v1.AdmissionReview) RuleResponse {
 	rr.Status = "Failure"
 	result := true
 
+	// Check if we are evaluating for the right resource kind. e.g. If rule is for pod and resource is not pod then skip.
 	if strings.ToLower(rule.Resource) != strings.ToLower(aReviewRequest.Kind) {
 		rr.Status = "Success"
 		return rr

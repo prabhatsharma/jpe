@@ -20,17 +20,16 @@ func DeletePolicy(aReview *v1.AdmissionReview) RuleResponse {
 		fmt.Println(err.Error())
 	}
 
-	var policyIndex int
+	// var policyIndex int
 
 	for index, policy := range AdmissionPolicies {
 		if aPolicy.Name == policy.Name {
-			policyIndex = index
+			// policyIndex = index
+			// Remove the policy from the central repo (memory)
+			AdmissionPolicies = append(AdmissionPolicies[:index], AdmissionPolicies[index+1:]...)
 			continue
 		}
 	}
-
-	// Remove the policy from the central repo (memory)
-	AdmissionPolicies = append(AdmissionPolicies[:policyIndex], AdmissionPolicies[policyIndex+1:]...)
 
 	rr.Allowed = true
 	rr.Message = "Policy Deleted"

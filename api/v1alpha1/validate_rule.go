@@ -3,6 +3,7 @@ package v1alpha1
 import (
 	"encoding/json"
 	"fmt"
+	"strings"
 
 	"github.com/dop251/goja"
 	v1 "k8s.io/api/admission/v1"
@@ -13,6 +14,11 @@ func ValidateRule(rule *Rule, aReviewRequest *v1.AdmissionReview) RuleResponse {
 	rr.Allowed = true
 	rr.Status = "Failure"
 	result := true
+
+	if strings.ToLower(rule.Resource) != strings.ToLower(aReviewRequest.Kind) {
+		rr.Status = "Success"
+		return rr
+	}
 
 	reviewObject, _ := json.Marshal(aReviewRequest.Request.Object)
 	jsObject := string(reviewObject)

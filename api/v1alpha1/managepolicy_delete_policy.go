@@ -9,8 +9,9 @@ import (
 
 // DeletePolicy loads policy immediately into memory when a new CR is created
 func DeletePolicy(aReview *v1.AdmissionReview) RuleResponse {
+	logger.LogStuff("delete request is: ", aReview)
 
-	json2Logger.LogJSON("delete request is: ", aReview)
+	// json2Logger.LogJSON("delete request is: ", aReview)
 	var rr RuleResponse
 	var requestedDeletePolicy AdmissionPolicy
 

@@ -45,6 +45,8 @@ func AddToExistingPolicies(aReview *v1.AdmissionReview) RuleResponse {
 	rr.Message = "Policy loaded"
 	rr.Status = "Success"
 
+	PrintPolicies()
+
 	return rr
 
 }
@@ -78,6 +80,8 @@ func DeletePolicy(aReview *v1.AdmissionReview) RuleResponse {
 	rr.Message = "Policy Deleted"
 	rr.Status = "Success"
 
+	PrintPolicies()
+
 	return rr
 
 }
@@ -106,6 +110,14 @@ func UpdatePolicy(aReview *v1.AdmissionReview) RuleResponse {
 	rr.Message = "Policy Updated"
 	rr.Status = "Success"
 
+	PrintPolicies()
+
 	return rr
 
+}
+
+func PrintPolicies() {
+	allPolcies, _ := json.Marshal(AdmissionPolicies)
+
+	fmt.Println("Current PolicyList: ", string(allPolcies))
 }

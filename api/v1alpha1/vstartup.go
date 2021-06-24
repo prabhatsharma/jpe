@@ -7,15 +7,13 @@ import (
 	"os"
 
 	"k8s.io/apimachinery/pkg/runtime"
-	ctrl "sigs.k8s.io/controller-runtime"
 
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/client/config"
 )
 
 var (
-	scheme1  = runtime.NewScheme()
-	setupLog = ctrl.Log.WithName("setup")
+	scheme1 = runtime.NewScheme()
 )
 
 var AdmissionPolicies []AdmissionPolicy

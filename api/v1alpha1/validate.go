@@ -12,10 +12,20 @@ import (
 
 func Validate(c *gin.Context) {
 	var aReviewRequest v1.AdmissionReview
+	var rr RuleResponse
 	c.BindJSON(&aReviewRequest)
 	if strings.ToLower(aReviewRequest.Request.Kind.Kind) == "admissionpolicy" {
-		// This is an admission policy. Load this policy in memory to use along with existing policies.
-		rr := AddToExistingPolicies(&aReviewRequest)
+		// This is an admission policy
+		if aReviewRequest.Request.Operation == "DELETE" {
+			// Delete the policy from memory
+			rr = DeletePolicy(&aReviewRequest)
+		} else if aReviewRequest.Request.Operation == "CREATE" { // CREATE
+			// Load this policy in memory to use along with existing policies.
+			rr = AddToExistingPolicies(&aReviewRequest)
+		} else if aReviewRequest.Request.Operation == "UPDATE" { // CREATE
+			// Update policy in memory to use along with existing policies.
+			rr = UpdatePolicy(&aReviewRequest)
+		}
 
 		status := &metav1.Status{
 			Status:  rr.Status, // Success or Failure
@@ -32,6 +42,24 @@ func Validate(c *gin.Context) {
 		c.JSON(200, aReviewResponse)
 
 	} else {
+		if aReviewRequest.Request.Operation == "DELETE" {
+			deleteResponse := &v1.AdmissionReview{
+				TypeMeta: aReviewRequest.TypeMeta,
+				Response: &v1.AdmissionResponse{
+					UID:     aReviewRequest.Request.UID,
+					Allowed: true,
+					Result: &metav1.Status{
+						Status:  "Success",
+						Message: "Skipping DELETE",
+					},
+				},
+			}
+
+			c.JSON(200, deleteResponse)
+
+			return
+
+		}
 		// Validate the resource based on existing admission policies
 		rr := ValidateResource(&aReviewRequest)
 

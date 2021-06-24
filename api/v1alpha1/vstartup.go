@@ -37,14 +37,6 @@ func LoadPolicyFromCustomResources() {
 
 	fmt.Println("Existing admissionpolicies: ", string(policies))
 
-	var ap AdmissionPolicy
-
-	getAdmissionPolicy(&ap)
-
-	policy, _ := json.Marshal(ap)
-
-	fmt.Println("\nSimplePolicy: ", string(policy))
-
 }
 
 func getAdmissionPolicies(apList *AdmissionPolicyList) error {
@@ -58,29 +50,6 @@ func getAdmissionPolicies(apList *AdmissionPolicyList) error {
 
 	if err != nil {
 		fmt.Printf("\nfailed to list admissionpolicies in namespace default: %v\n", err)
-		return err
-	}
-
-	return nil
-}
-
-func getAdmissionPolicy(ap *AdmissionPolicy) error {
-	cl, err := client.New(config.GetConfigOrDie(), client.Options{Scheme: scheme1})
-	if err != nil {
-		fmt.Println("failed to create client")
-		os.Exit(1)
-	}
-
-	// var api *AdmisssionPolicy
-
-	okey := client.ObjectKey{
-		Name: "simplepolicy",
-	}
-
-	err = cl.Get(context.TODO(), okey, ap)
-
-	if err != nil {
-		fmt.Printf("\nfailed to get admissionpolicy : %v\n", err)
 		return err
 	}
 
